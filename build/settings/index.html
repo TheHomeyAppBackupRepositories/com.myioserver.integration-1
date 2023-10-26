@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+    ></script>
+  </head>
+  <body>
+    <h1 data-i18n="settings.title">
+      <!-- This will be filled with the translated string with key 'settings.title'. -->
+    </h1>
+    <p data-i18n="settings.subtitle">
+      <!-- This field will also be translated -->
+    </p>
+
+    <fieldset>
+      <legend>My Settings</legend>
+
+      <div class="field row">
+        <label for="address">Address</label>
+        <input id="address" type="text" value="" />
+      </div>
+      <div class="field row">
+        <label for="http_port">Http port</label>
+        <input id="http_port" type="text" value="" />
+      </div>      
+      <div class="field row">
+        <label for="username">Username</label>
+        <input id="username" type="text" value="" />
+      </div>
+      <div class="field row">
+        <label for="password">Password</label>
+        <input id="password" type="password" value="" />
+      </div>
+    </fieldset>
+
+    <button id="save" class="right">Save changes</button>
+
+    <script type="text/javascript">
+      // a method named 'onHomeyReady' must be present in your code
+      function onHomeyReady(Homey) {
+        // Tell Homey we're ready to be displayed        
+
+        var addressElement = document.getElementById("address");
+        var http_portElement = document.getElementById("http_port");
+        var usernameElement = document.getElementById("username");
+        var passwordElement = document.getElementById("password");
+        var saveElement = document.getElementById("save");
+      
+        addressElement.value=Homey.get("address");
+        http_portElement.value=Homey.get("http_port");
+        usernameElement.value=Homey.get("username");
+        passwordElement.value=Homey.get("password");
+
+        Homey.get("address", function (err, address) {
+          if (err) return Homey.alert(err);
+          addressElement.value = address;
+        });
+        Homey.get("http_port", function (err, http_port) {
+          if (err) return Homey.alert(err);
+          http_portElement.value = http_port;
+        });
+        Homey.get("username", function (err, username) {
+          if (err) return Homey.alert(err);
+          usernameElement.value = username;
+        });
+        Homey.get("password", function (err, password) {
+          if (err) return Homey.alert(err);
+          passwordElement.value = password;
+        });
+
+       
+
+        saveElement.addEventListener("click", function (e) {
+          
+           
+          Homey.set("address", addressElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("http_port", http_portElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("username", usernameElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          Homey.set("password", passwordElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          
+          Homey.set("updated_settings", "true", function (err) {
+            if (err) return Homey.alert(err);
+          });
+            
+          
+        });
+
+        Homey.ready();
+      }
+    </script>
+  </body>
+</html>

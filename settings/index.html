@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+    ></script>
+  </head>
+  <body>
+    <h1 data-i18n="settings.title">
+      <!-- This will be filled with the translated string with key 'settings.title'. -->
+    </h1>
+    <p data-i18n="settings.subtitle">
+      <!-- This field will also be translated -->
+    </p>
+
+    <div class="field row">
+      <label for="nr">Server Number</label>
+      <input id="nr" type="number" value="1" min="1" max="10" onchange="onHomeyReady(Homey)" />
+    </div>
+    <fieldset>
+      <legend>My Settings</legend>  
+      <div class="field row">
+        <label id="actual"></label>
+      </div>
+      <div class="field row">
+        <label for="address">Address</label>
+        <input id="address" type="text" value="" />
+      </div>
+      <div class="field row">
+        <label for="http_port">Http port</label>
+        <input id="http_port" type="text" value="" />
+      </div>      
+      <div class="field row">
+        <label for="username">Username</label>
+        <input id="username" type="text" value="" />
+      </div>
+      <div class="field row">
+        <label for="password">Password</label>
+        <input id="password" type="password" value="" />
+      </div>
+    </fieldset>
+    <button id="delete" class="left">Delete</button>
+    <button id="save" class="right">Save changes</button>
+
+    <script type="text/javascript">
+      // a method named 'onHomeyReady' must be present in your code
+      function onHomeyReady(Homey) {
+        // Tell Homey we're ready to be displayed   
+
+        var nrElement = document.getElementById("nr");
+        var tempNrChar="";
+        var tempNrInt=parseInt(nrElement.value);
+        
+        if (tempNrInt > 1){
+          tempNrChar=tempNrInt.toString();
+        }
+        document.getElementById("actual").innerHTML ="Actual Server:"+tempNrInt;
+        var addressElement = document.getElementById("address");
+        var http_portElement = document.getElementById("http_port");
+        var usernameElement = document.getElementById("username");
+        var passwordElement = document.getElementById("password");
+        var saveElement = document.getElementById("save");
+        var deleteElement = document.getElementById("delete");
+
+        addressElement.value=Homey.get("address"+tempNrChar);
+        http_portElement.value=Homey.get("http_port"+tempNrChar);
+        usernameElement.value=Homey.get("username"+tempNrChar);
+        passwordElement.value=Homey.get("password"+tempNrChar);
+
+        Homey.get("address"+tempNrChar, function (err, address) {
+          if (err) return Homey.alert(err);
+          addressElement.value = address;
+        });
+        Homey.get("http_port"+tempNrChar, function (err, http_port) {
+          if (err) return Homey.alert(err);
+          http_portElement.value = http_port;
+        });
+        Homey.get("username"+tempNrChar, function (err, username) {
+          if (err) return Homey.alert(err);
+          usernameElement.value = username;
+        });
+        Homey.get("password"+tempNrChar, function (err, password) {
+          if (err) return Homey.alert(err);
+          passwordElement.value = password;
+        });
+
+       
+
+        saveElement.addEventListener("click", function (e) {
+          nrElement = document.getElementById("nr");
+          tempNrChar="";
+          tempNrInt=parseInt(nrElement.value);    
+          if (tempNrInt > 1){
+            tempNrChar=tempNrInt.toString();
+          }
+      
+          var _tempString="address"+tempNrChar;
+          Homey.set(_tempString, addressElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="http_port"+tempNrChar;
+          Homey.set(_tempString, http_portElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="username"+tempNrChar;
+          Homey.set(_tempString, usernameElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="password"+tempNrChar;
+          Homey.set(_tempString, passwordElement.value, function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="serverActive"+tempNrChar;
+          Homey.set(_tempString, "true", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="updated_settings"+tempNrChar;
+          Homey.set(_tempString, "true", function (err) {
+            if (err) return Homey.alert(err);
+          });          
+          
+        });
+        deleteElement.addEventListener("click", function (e) {
+          nrElement = document.getElementById("nr");
+          tempNrChar="";
+          tempNrInt=parseInt(nrElement.value);    
+          if (tempNrInt > 1){
+            tempNrChar=tempNrInt.toString();
+          }
+      
+          var _tempString="address"+tempNrChar;
+          Homey.set(_tempString, "", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="http_port"+tempNrChar;
+          Homey.set(_tempString, "", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="username"+tempNrChar;
+          Homey.set(_tempString, "", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="password"+tempNrChar;
+          Homey.set(_tempString, "", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="serverActive"+tempNrChar;
+          Homey.set(_tempString, "false", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          _tempString="updated_settings"+tempNrChar;
+          Homey.set(_tempString, "true", function (err) {
+            if (err) return Homey.alert(err);
+          });
+          addressElement.value="";
+          http_portElement.value="";
+          usernameElement.value="";
+          passwordElement.value="";
+          
+        });
+
+        Homey.ready();
+      }
+    </script>
+  </body>
+</html>

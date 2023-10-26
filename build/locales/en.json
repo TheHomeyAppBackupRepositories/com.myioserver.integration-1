@@ -1,0 +1,7 @@
+{   
+    "settings": {
+        "title": "myIO settings",
+        "subtitle": "Please log in"
+    },
+    "device_unavailable": "Cannot reach the device on the local Wi-Fi"
+}

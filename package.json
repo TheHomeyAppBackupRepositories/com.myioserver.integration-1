@@ -1,0 +1,21 @@
+{
+  "name": "com.myioserver.helloworld",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {},
+  "devDependencies": {
+    "@tsconfig/node12": "^1.0.9",
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.2.2",
+    "@types/node": "^16.11.9"
+  },
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "http": "0.0.1-security",
+    "http.min": "^2.1.0",
+    "node-fetch": "^3.1.0",
+    "socket.io": "^3.1.1",
+    "socket.io-client": "^3.1.1",
+    "websocket": "^1.0.34",
+    "xhr2": "^0.2.1"
+  }
+}
